@@ -71,15 +71,15 @@ export const RESUME_DATA = {
         "Built a mobile application called Wingman using react native, an AI-assisted conversational app. Developed a Chrome extension for fashion products using the SerpAPI - Google Lens API.",
     },
       {
-        company: "Web3 Tech Labs",
+        company: "Fast KYC",
         link:"",
-        badges: ["Remote"],
-        title: "Full Stack Developer Intern",
+        badges: ["Freelance"],
+        title: "",
         logo: "",
         start: "Sept 2023",
         end: "Dec 2023",
         description:
-          "Built a mobile application called Wingman using react native, an AI-assisted conversational app. Developed a Chrome extension for fashion products using the SerpAPI - Google Lens API.",
+          "This website simplifies the KYC process. Users can register once and use their public address with various organizations to avoid repeated KYC processes.",
       },
   ],
   skills: [
