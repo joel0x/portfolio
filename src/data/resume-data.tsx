@@ -27,7 +27,7 @@ export const RESUME_DATA = {
   about:
     "ML undergrad, full stack developer",
   summary:
-    "Fourth-year Al-ML engineering student passionate about creating tech products. A self-taught full-stack developer with experience in building various projects, including Al and web3 applications.",
+    "Fourth-year Al-ML engineering student passionate about creating tech products. Built mobile and web applications, worked on AI and web3, particpated in multiple hackathons.",
   personalWebsiteUrl: "https://jarocki.me",
   contact: {
     email: "joelmachado649@gmail.com",
@@ -70,38 +70,6 @@ export const RESUME_DATA = {
       end: "Dec 2023",
       description:
         "Built a mobile application called Wingman using react native, an AI-assisted conversational app. Developed a Chrome extension for fashion products using the SerpAPI - Google Lens API.",
-    },
-    // {
-    //   company: "Clevertech",
-    //   link: "https://clevertech.biz",
-    //   badges: ["Remote"],
-    //   title: "Lead Android Developer → Full Stack Developer",
-    //   logo: ClevertechLogo,
-    //   start: "2015",
-    //   end: "2021",
-    //   description:
-    //     "Created Android mobile apps and led teams for companies like Vision Media, DKMS, or AAA. Built live streaming application for Evercast from scratch. Technologies: Android, Kotlin, React, TypeScript, GraphQL",
-    // },
-    // {
-    //   company: "Jojo Mobile",
-    //   link: "https://bsgroup.eu/",
-    //   badges: [],
-    //   title: "Android Developer → Lead Android Developer",
-    //   logo: JojoMobileLogo,
-    //   start: "2012",
-    //   end: "2015",
-    //   description:
-    //     "Built an Android team, created Android apps for biggest Polish companies like LOT, Polskie Radio, Agora, PolskaPress",
-    // },
-    {
-      company: "Fast KYC",
-      badges:["Freelance"],
-      work:"",
-       title: "",
-       logo: "",
-      start: "Mar 2023",
-      end: "Aug 2023",
-      description: "Created a website simplifying the KYC process. Users can register once and use their public address with various organizations to avoid repeated KYC processes. Technologies used were Javascript and Web3.js successfully delivered the project to the client ahead of the deadline.",
     },
   ],
   skills: [
@@ -169,116 +137,35 @@ export const RESUME_DATA = {
         href: "https://github.com/joel0x/dating-site",
       },
     },
-    
-    // {
-    //   title: "Barepapers",
-    //   techStack: ["Side Project", "Next.js", "Puppeteer"],
-    //   description:
-    //     "Generates beautiful wallpapers using random shapes and gradients",
-    //   logo: BarepapersLogo,
-    //   link: {
-    //     label: "barepapers.com",
-    //     href: "https://barepapers.com/",
-    //   },
-    // },
-    // {
-    //   title: "Year progress",
-    //   techStack: ["Side Project", "TypeScript", "Next.js"],
-    //   description: "Tracks current year progress and displays a countdown",
-    //   logo: YearProgressLogo,
-    //   link: {
-    //     label: "getyearprogress.com",
-    //     href: "https://getyearprogress.com/",
-    //   },
-    // },
-    // {
-    //   title: "Parabol",
-    //   techStack: [
-    //     "Full Stack Developer",
-    //     "TypeScript",
-    //     "React",
-    //     "Node.js",
-    //     "GraphQL",
-    //   ],
-    //   description:
-    //     "The Agile meeting co-pilot that delivers better meetings with less effort",
-    //   logo: ParabolLogo,
-    //   link: {
-    //     label: "github.com",
-    //     href: "https://parabol.co/",
-    //   },
-    // },
-    // {
-    //   title: "Evercast",
-    //   techStack: [
-    //     "Lead Frontend Developer",
-
-    //     "TypeScript",
-    //     "React",
-    //     "Node.js",
-    //     "GraphQL",
-    //   ],
-    //   description:
-    //     "Creative collaboration platform that combines video conferencing and HD media streaming",
-    //   logo: EvercastLogo,
-    //   link: {
-    //     label: "evercast.us",
-    //     href: "https://www.evercast.us/",
-    //   },
-    // },
-    // {
-    //   title: "Mobile Vikings",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Android application for leading virtual mobile operator in Poland",
-    //   logo: MobileVikingsLogo,
-    //   link: {
-    //     label: "mobilevikings.pl",
-    //     href: "https://mobilevikings.pl/",
-    //   },
-    // },
-    // {
-    //   title: "Howdy",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Howdy is a place for you to join communities you care about",
-    //   logo: Howdy,
-    //   link: {
-    //     label: "play.google.com",
-    //     href: "https://howdy.co/",
-    //   },
-    // },
-    // {
-    //   title: "Tastycloud",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Android application for managing and displaying restaurant menus in kiosk mode",
-    //   logo: TastyCloudLogo,
-    //   link: {
-    //     label: "tastycloud.fr",
-    //     href: "https://www.tastycloud.fr/",
-    //   },
-    // },
-    // {
-    //   title: "Ambit",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Android application that helps with sharing your contact details",
-    //   logo: AmbitLogo,
-    // },
-    // {
-    //   title: "Bim",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Android application that helps with booking a table in a restaurants",
-    //   logo: BimLogo,
-    // },
-    // {
-    //   title: "Canal Digital GO",
-    //   techStack: ["Lead Android Developer", "Android", "Kotlin"],
-    //   description:
-    //     "Video streaming mobile application for Canal Digital subscribers",
-    //   logo: CDGOLogo,
-    // },
+    {
+      title: "Custodial wallet with Gas fees prediction",
+      techStack: [
+        "Hackathon",
+        "React.js",
+        "Vite",
+        "MongoDB",
+        "DeepAR"
+      ],
+      description: "This wallet helps you send and recieve crypto in timeline when gas fees is low",
+      logo: "",
+      link: {
+        label: "",
+        href: "https://github.com/utkarshkushi/revaHack2023",
+      }
+    },
+      {
+        title: "Video Script",
+        techStack: [
+          "Side Project",
+          "Python",
+          "LipNet" 
+        ],
+        description: "Used LipNet research paper to build a model which transcripts based on lip movement without any audio",
+        logo: "",
+        link: {
+          label: "",
+          href: "https://github.com/joel0x/Video-script",
+        },
+    }
   ],
 } as const;
