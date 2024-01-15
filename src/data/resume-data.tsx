@@ -28,7 +28,6 @@ export const RESUME_DATA = {
     "ML undergrad, full stack developer",
   summary:
     "Fourth-year Al-ML engineering student passionate about creating tech products. Built mobile and web applications, worked on AI and web3, particpated in multiple hackathons.",
-  personalWebsiteUrl: "https://jarocki.me",
   contact: {
     email: "joelmachado649@gmail.com",
     tel: "+917899984154",
@@ -71,6 +70,17 @@ export const RESUME_DATA = {
       description:
         "Built a mobile application called Wingman using react native, an AI-assisted conversational app. Developed a Chrome extension for fashion products using the SerpAPI - Google Lens API.",
     },
+      {
+        company: "Web3 Tech Labs",
+        link:"",
+        badges: ["Remote"],
+        title: "Full Stack Developer Intern",
+        logo: "",
+        start: "Sept 2023",
+        end: "Dec 2023",
+        description:
+          "Built a mobile application called Wingman using react native, an AI-assisted conversational app. Developed a Chrome extension for fashion products using the SerpAPI - Google Lens API.",
+      },
   ],
   skills: [
     "JavaScript",
