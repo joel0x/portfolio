@@ -76,8 +76,8 @@ export const RESUME_DATA = {
         badges: ["Freelance"],
         title: "",
         logo: "",
-        start: "Sept 2023",
-        end: "Dec 2023",
+        start: "Mar 2023",
+        end: "Aug 2023",
         description:
           "This website simplifies the KYC process. Users can register once and use their public address with various organizations to avoid repeated KYC processes.",
       },
