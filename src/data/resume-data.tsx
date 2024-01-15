@@ -31,7 +31,7 @@ export const RESUME_DATA = {
   personalWebsiteUrl: "https://jarocki.me",
   contact: {
     email: "joelmachado649@gmail.com",
-    tel: "+48530213401",
+    tel: "+917899984154",
     social: [
       {
         name: "GitHub",
@@ -45,7 +45,7 @@ export const RESUME_DATA = {
       },
       {
         name: "X",
-        url: "https://x.com/",
+        url: "https://x.com/joemac042",
         icon: XIcon,
       },
     ],
@@ -62,10 +62,10 @@ export const RESUME_DATA = {
   work: [
     {
       company: "Web3 Tech Labs",
-      link: "https://parabol.co",
+      link:"",
       badges: ["Remote"],
       title: "Full Stack Developer Intern",
-      logo: ParabolLogo,
+      logo: "",
       start: "Sept 2023",
       end: "Dec 2023",
       description:
@@ -96,8 +96,11 @@ export const RESUME_DATA = {
     {
       company: "Fast KYC",
       badges:["Freelance"],
-      // work:"Fast KYC",
-      // title: "Full stack developer",
+      work:"",
+       title: "",
+       logo: "",
+      start: "Mar 2023",
+      end: "Aug 2023",
       description: "Created a website simplifying the KYC process. Users can register once and use their public address with various organizations to avoid repeated KYC processes. Technologies used were Javascript and Web3.js successfully delivered the project to the client ahead of the deadline.",
     },
   ],
@@ -106,10 +109,14 @@ export const RESUME_DATA = {
     "Python",
     "React/React native/Next.js",
     "Node.js",
+    "NLP",
+    "Deep Learning",
+    "Fine Tuning",
     "DSA",
     "ML algos",
     "Tensor flow",
-    "MongoDB"
+    "MongoDB",
+    "Smart Contracts"
     
   ],
   projects: [
