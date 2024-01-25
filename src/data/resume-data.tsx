@@ -27,7 +27,7 @@ export const RESUME_DATA = {
   about:
     "ML undergrad, full stack developer",
   summary:
-    "Fourth-year Al-ML engineering student passionate about creating tech products. Built mobile and web applications, worked on AI and web3, particpated in multiple hackathons.",
+    "Fourth-year Al-ML engineering student passionate about creating tech products. Built mobile and web applications, worked on AI and web3, participated in multiple hackathons.",
   contact: {
     email: "joelmachado649@gmail.com",
     tel: "+917899984154",
