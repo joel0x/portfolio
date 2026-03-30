@@ -34,25 +34,25 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 w-full pt-20"
+        className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 w-full pt-12 md:pt-20"
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-8 md:mb-12 opacity-0 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-4 md:mb-12 opacity-0 animate-fade-in">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span className="text-xs font-medium text-gray-300 tracking-wide">Available for Work</span>
           </div>
 
           {/* Main Heading with Creative Typography */}
-          <h1 className="font-display font-black leading-[0.9] mb-8 md:mb-12">
+          <h1 className="font-display font-black leading-[0.9] mb-4 md:mb-12">
             <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up" style={{ fontFamily: "'Rush Zone', sans-serif" }}>
               Joel Machado
             </div>
           </h1>
 
           {/* Subtitle */}
-          <div className="max-w-3xl mx-auto mb-8 md:mb-12 opacity-0 animate-slide-up stagger-2">
+          <div className="max-w-3xl mx-auto mb-6 md:mb-12 opacity-0 animate-slide-up stagger-2">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 text-gradient-purple">
               AI Engineer
             </h2>
