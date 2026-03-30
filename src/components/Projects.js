@@ -290,7 +290,7 @@ const Projects = () => {
       number: '01',
       title: 'Mahabharata — JioHotstar',
       category: 'OTT Production',
-      description: "Led AI pipeline architecture for India's biggest streaming series. Built bulk generation systems and multi-language LipSync automation at production scale.",
+      description: "Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation at production scale.",
       tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
       size: 'col-span-12 lg:col-span-8',
       videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',

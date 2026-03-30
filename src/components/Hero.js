@@ -46,7 +46,7 @@ const Hero = () => {
 
           {/* Main Heading with Creative Typography */}
           <h1 className="font-display font-black leading-[0.9] mb-8 md:mb-12">
-            <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up">
+            <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up" style={{ fontFamily: "'Rush Zone', sans-serif" }}>
               Joel Machado
             </div>
           </h1>
