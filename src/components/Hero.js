@@ -27,42 +27,42 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-4 md:py-0">
       {/* Gradient Mesh Background */}
       <div className="gradient-mesh" />
       <div className="grain" />
 
       {/* Content */}
       <div
-        className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 w-full pt-12 md:pt-20"
+        className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 w-full"
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-4 md:mb-12 opacity-0 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-3 md:mb-12 opacity-0 animate-fade-in">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span className="text-xs font-medium text-gray-300 tracking-wide">Available for Work</span>
           </div>
 
           {/* Main Heading with Creative Typography */}
-          <h1 className="font-display font-black leading-[0.9] mb-4 md:mb-12">
+          <h1 className="font-display font-black leading-[0.9] mb-3 md:mb-12">
             <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up" style={{ fontFamily: "'Rush Zone', sans-serif" }}>
               Joel Machado
             </div>
           </h1>
 
           {/* Subtitle */}
-          <div className="max-w-3xl mx-auto mb-6 md:mb-12 opacity-0 animate-slide-up stagger-2">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 text-gradient-purple">
+          <div className="max-w-3xl mx-auto mb-4 md:mb-12 opacity-0 animate-slide-up stagger-2">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-3 md:mb-4 text-gradient-purple">
               AI Engineer
             </h2>
-            <p className="text-base md:text-lg text-gray-400 leading-relaxed">
+            <p className="text-base md:text-lg text-gray-400 leading-relaxed px-4 md:px-0">
               I build AI systems for film production, fashion e-commerce, and streaming platforms—from custom diffusion models to serverless GPU infrastructure that scales.
             </p>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 opacity-0 animate-slide-up stagger-3">
+          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 opacity-0 animate-slide-up stagger-3">
             <button
               onClick={() => scrollToSection('work')}
               className="group px-10 py-5 bg-gradient-to-r from-primary-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-primary-500/50 transition-all cursor-hover-target magnetic-btn flex items-center gap-3"
