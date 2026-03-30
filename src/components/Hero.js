@@ -27,54 +27,54 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-4 md:py-0">
+    <section id="home" className="relative min-h-[auto] md:min-h-screen flex items-start md:items-center justify-center overflow-hidden pt-20 pb-8 md:py-0">
       {/* Gradient Mesh Background */}
       <div className="gradient-mesh" />
       <div className="grain" />
 
       {/* Content */}
       <div
-        className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 w-full"
+        className="relative z-10 max-w-[1400px] mx-auto px-4 lg:px-12 w-full"
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
       >
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center space-y-3 md:space-y-8">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-3 md:mb-12 opacity-0 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full opacity-0 animate-fade-in">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span className="text-xs font-medium text-gray-300 tracking-wide">Available for Work</span>
           </div>
 
           {/* Main Heading with Creative Typography */}
-          <h1 className="font-display font-black leading-[0.9] mb-3 md:mb-12">
+          <h1 className="font-display font-black leading-[0.9]">
             <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up" style={{ fontFamily: "'Rush Zone', sans-serif" }}>
               Joel Machado
             </div>
           </h1>
 
           {/* Subtitle */}
-          <div className="max-w-3xl mx-auto mb-4 md:mb-12 opacity-0 animate-slide-up stagger-2">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-3 md:mb-4 text-gradient-purple">
+          <div className="max-w-3xl mx-auto opacity-0 animate-slide-up stagger-2 space-y-2 md:space-y-4">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gradient-purple">
               AI Engineer
             </h2>
-            <p className="text-base md:text-lg text-gray-400 leading-relaxed px-4 md:px-0">
+            <p className="text-sm md:text-lg text-gray-400 leading-relaxed px-2 md:px-0">
               I build AI systems for film production, fashion e-commerce, and streaming platforms—from custom diffusion models to serverless GPU infrastructure that scales.
             </p>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 opacity-0 animate-slide-up stagger-3">
+          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 opacity-0 animate-slide-up stagger-3 w-full px-4 sm:w-auto sm:px-0">
             <button
               onClick={() => scrollToSection('work')}
-              className="group px-10 py-5 bg-gradient-to-r from-primary-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-primary-500/50 transition-all cursor-hover-target magnetic-btn flex items-center gap-3"
+              className="group w-full sm:w-auto px-8 py-3.5 md:px-10 md:py-5 bg-gradient-to-r from-primary-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-primary-500/50 transition-all cursor-hover-target magnetic-btn flex items-center justify-center gap-3 text-sm md:text-base"
             >
               View Projects
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="px-10 py-5 glass text-white font-semibold rounded-full hover:glass-strong transition-all cursor-hover-target magnetic-btn"
+              className="w-full sm:w-auto px-8 py-3.5 md:px-10 md:py-5 glass text-white font-semibold rounded-full hover:glass-strong transition-all cursor-hover-target magnetic-btn text-sm md:text-base"
             >
               Get in Touch
             </button>

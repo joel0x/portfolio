@@ -313,23 +313,4 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
   }
-
-  /* Mobile spacing fixes */
-  #home {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  #home .flex.flex-col {
-    gap: 0.5rem;
-  }
-
-  /* Tighter mobile typography */
-  #home h1 {
-    margin-bottom: 0.75rem !important;
-  }
-
-  #home h2 {
-    margin-bottom: 0.75rem !important;
-  }
 }
