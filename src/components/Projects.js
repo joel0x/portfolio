@@ -290,7 +290,7 @@ const Projects = () => {
       number: '01',
       title: 'Mahabharata — JioHotstar',
       category: 'OTT Production',
-      description: "Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation at production scale.",
+      description: "Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.",
       tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
       size: 'col-span-12 lg:col-span-8',
       videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
@@ -343,7 +343,7 @@ const Projects = () => {
       number: '07',
       title: 'Video LoRA Training',
       category: 'Video AI',
-      description: 'Trained character-consistent LoRAs on LTX and Wan video models for custom character generation at scale.',
+      description: 'Trained character-consistent LoRAs on LTX and Wan video models for custom character generation and style transfers.',
       tags: ['LoRA', 'LTX', 'Wan'],
       size: 'col-span-12 lg:col-span-4'
     },
@@ -351,8 +351,8 @@ const Projects = () => {
       number: '08',
       title: 'Fashion Brand Fine-tuning',
       category: 'E-commerce',
-      description: 'Fine-tuned Flux models with DreamBooth and LoRA for fashion brands to generate product catalog images.',
-      tags: ['Flux', 'DreamBooth', 'E-commerce'],
+      description: 'Fine-tuned Flux models with Ostris ai-toolkit and LoRA for fashion brands to generate product catalog images.',
+      tags: ['Flux', 'Qwen', 'sdxl', 'E-commerce'],
       size: 'col-span-12 lg:col-span-8'
     }
   ];
