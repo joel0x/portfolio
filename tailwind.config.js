@@ -39,7 +39,7 @@ module.exports = {
         'float': 'float 6s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
         'scroll-down': 'scrollDown 2s ease-in-out infinite',
-        'marquee': 'marquee 20s linear infinite',
+        'marquee': 'marquee 5s linear infinite',
       },
       keyframes: {
         fadeIn: {
