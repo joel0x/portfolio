@@ -57,7 +57,7 @@ const Hero = () => {
               AI Engineer
             </h2>
             <p className="text-base md:text-lg text-gray-400 leading-relaxed px-2 md:px-0">
-              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure that scales.
+              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure. overall, i know programming in general and have experince building products for end users.
             </p>
           </div>
 
