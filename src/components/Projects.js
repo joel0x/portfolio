@@ -7,7 +7,6 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
   const videoRef = useRef(null);
-  const iframeRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
