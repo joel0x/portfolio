@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const ProjectCard = ({ number, title, category, description, tags, size, delay, videoUrl, youtubeLink, instagramUrl }) => {
+const ProjectCard = ({ number, title, category, description, tags, size, delay, videoUrl, youtubeLink, instagramUrl, projectLink }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [tiltStyle, setTiltStyle] = useState({});
@@ -17,20 +17,12 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
           setIsVisible(true);
           setIsInViewportCenter(true);
         } else {
-          // Stop video/content when scrolled out of view
           setIsInViewportCenter(false);
-          setIsHovered(false);
-          if (videoRef.current) {
-            videoRef.current.src = '';
-          }
-          if (iframeRef.current) {
-            iframeRef.current.src = iframeRef.current.src; // Reload to reset
-          }
         }
       },
       {
-        threshold: 0.5,
-        rootMargin: '-20% 0px -20% 0px' // Play when card is in middle 60% of viewport
+        threshold: 0.3,
+        rootMargin: '0px'
       }
     );
 
@@ -60,27 +52,29 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
   }, []);
 
   useEffect(() => {
-    // Load Instagram embed script for real posts
-    if (instagramUrl && (isHovered || isInViewportCenter)) {
-      const script = document.createElement('script');
-      script.src = 'https://www.instagram.com/embed.js';
-      script.async = true;
-      document.body.appendChild(script);
+    // Load Instagram embed script for real posts immediately
+    if (instagramUrl) {
+      // Check if script already exists
+      if (!document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://www.instagram.com/embed.js';
+        script.async = true;
+        document.body.appendChild(script);
 
-      // Process embeds after script loads
-      script.onload = () => {
+        // Process embeds after script loads
+        script.onload = () => {
+          if (window.instgrm) {
+            window.instgrm.Embeds.process();
+          }
+        };
+      } else {
+        // Script already loaded, just process embeds
         if (window.instgrm) {
           window.instgrm.Embeds.process();
         }
-      };
-
-      return () => {
-        if (document.body.contains(script)) {
-          document.body.removeChild(script);
-        }
-      };
+      }
     }
-  }, [instagramUrl, isHovered, isInViewportCenter]);
+  }, [instagramUrl]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -121,7 +115,7 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
-      className={`glass rounded-3xl p-8 lg:p-10 cursor-hover-target card-glow reveal ${isVisible ? 'active' : ''} ${size} ${youtubeLink ? 'cursor-pointer' : ''} relative overflow-hidden`}
+      className={`glass rounded-2xl sm:rounded-3xl overflow-hidden cursor-hover-target card-glow reveal ${isVisible ? 'active' : ''} ${size} ${youtubeLink ? 'cursor-pointer' : ''} relative w-full`}
       style={{
         '--mouse-x': `${mousePosition.x}%`,
         '--mouse-y': `${mousePosition.y}%`,
@@ -130,131 +124,98 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
         ...tiltStyle
       }}
     >
-      {/* Video Popup Overlay - Inside card */}
-      {videoUrl && (isHovered || isInViewportCenter) && (
-        <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full h-full relative">
+      {/* Video Section - Visible at top, loads when in view */}
+      {videoUrl && (
+        <div className="w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
+          {isInViewportCenter ? (
             <iframe
               ref={videoRef}
               src={`${videoUrl}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=${videoUrl.split('/').pop().split('?')[0]}&playsinline=1&enablejsapi=1`}
-              className="w-full h-full rounded-2xl shadow-2xl"
+              className="w-full h-full border-0"
               allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
               allowFullScreen
               title={title}
             />
-          </div>
+          ) : (
+            <div className="w-full h-full bg-gray-900 flex items-center justify-center">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+              </svg>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Instagram Feed Popup - Inside card - Dark Mode */}
-      {instagramUrl && (isHovered || isInViewportCenter) && (
-        <div
-          className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      {/* Instagram Feed - Visible at top, loads immediately */}
+      {instagramUrl && (
+        <a
+          href={`https://www.instagram.com/${instagramUrl}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full bg-black aspect-video flex items-center justify-center overflow-hidden group cursor-pointer block"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="w-full h-full relative bg-black rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-            {/* Instagram Header - Dark Mode */}
-            <div className="bg-black border-b border-gray-800 px-4 py-3 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]">
-                <div className="w-full h-full rounded-full bg-black"></div>
+          <div className="w-full h-full bg-gradient-to-br from-purple-900 via-pink-900 to-orange-900 flex flex-col items-center justify-center p-8 group-hover:opacity-90 transition-opacity">
+            {/* Instagram Icon */}
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-1 mb-6">
+              <div className="w-full h-full rounded-xl bg-black flex items-center justify-center">
+                <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
               </div>
-              <div className="flex-1">
-                <a
-                  href={`https://www.instagram.com/${instagramUrl}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-sm hover:underline text-white"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  @{instagramUrl}
-                </a>
-              </div>
-              <a
-                href={`https://www.instagram.com/${instagramUrl}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 text-sm font-semibold hover:text-blue-300"
-                onClick={(e) => e.stopPropagation()}
-              >
-                View Profile
-              </a>
             </div>
 
-            {/* Instagram Real Content with Dark Background */}
-            <div className="flex-1 bg-black overflow-y-auto overflow-x-hidden p-4 scrollbar-hide">
-              <div className="max-w-md mx-auto overflow-x-hidden">
-                {/* Instagram Embed Widget - Shows real posts */}
-                <blockquote
-                  className="instagram-media"
-                  data-instgrm-permalink={`https://www.instagram.com/${instagramUrl}/`}
-                  data-instgrm-version="14"
-                  style={{
-                    background: '#000',
-                    border: 0,
-                    borderRadius: '3px',
-                    boxShadow: '0 0 1px 0 rgba(255,255,255,0.5),0 1px 10px 0 rgba(255,255,255,0.15)',
-                    margin: '1px',
-                    maxWidth: '540px',
-                    minWidth: '326px',
-                    padding: 0,
-                    width: '99.375%'
-                  }}
-                >
-                  <div style={{ padding: '40px' }}>
-                    <a
-                      href={`https://www.instagram.com/${instagramUrl}/`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        background: '#000',
-                        lineHeight: 0,
-                        padding: 0,
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        width: '100%',
-                        display: 'block',
-                        color: '#fff'
-                      }}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-                        <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)', padding: '3px' }}>
-                          <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#000' }}></div>
-                        </div>
-                        <div style={{ color: '#fff', fontSize: '16px', fontWeight: 600 }}>@{instagramUrl}</div>
-                        <div style={{ color: '#999', fontSize: '14px' }}>View this profile on Instagram</div>
-                      </div>
-                    </a>
-                  </div>
-                </blockquote>
-              </div>
+            {/* Text */}
+            <div className="text-center">
+              <h3 className="text-white text-xl font-bold mb-2">View on Instagram</h3>
+              <p className="text-gray-300 text-sm">Click to watch the AI Food Show</p>
+            </div>
+
+            {/* Play indicator */}
+            <div className="mt-6 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+              <span className="text-white text-sm font-medium">Open Post →</span>
             </div>
           </div>
-        </div>
+        </a>
       )}
 
-      <div className="flex items-start justify-between mb-6">
-        <span className="text-xs font-mono text-gray-500">{number}</span>
-        <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">{category}</span>
-      </div>
+      {/* Content Section */}
+      <div className="p-6 sm:p-8 lg:p-10">
+        <div className="flex items-start justify-between mb-4 sm:mb-6">
+          <span className="text-xs font-mono text-gray-500">{number}</span>
+          <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">{category}</span>
+        </div>
 
-      <h3 className="font-display text-2xl lg:text-3xl font-bold mb-3 leading-tight">
-        {title}
-      </h3>
+        <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 leading-tight">
+          {title}
+        </h3>
 
-      <p className="text-gray-400 leading-relaxed mb-6 text-sm">
-        {description}
-      </p>
-
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag, index) => (
-          <span
-            key={index}
-            className="px-4 py-2 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300"
+        {projectLink && (
+          <a
+            href={projectLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-medium mb-2 sm:mb-3 underline break-all"
+            onClick={(e) => e.stopPropagation()}
           >
-            {tag}
-          </span>
-        ))}
+            {projectLink}
+          </a>
+        )}
+
+        <p className="text-gray-400 leading-relaxed mb-4 sm:mb-6 text-sm">
+          {description}
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -292,47 +253,57 @@ const Projects = () => {
       category: 'OTT Production',
       description: "Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.",
       tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
-      size: 'col-span-12 lg:col-span-8',
+      size: 'col-span-12 lg:col-span-6',
       videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
       youtubeLink: 'https://youtu.be/ELmlmlvkNF8?si=71_cO7lOvY9_d5Bv'
     },
     {
       number: '02',
-      title: 'Rhea Chakraborty AI Avatar',
-      category: 'Celebrity Tech',
-      description: 'Built celebrity AI avatar with consistent character generation across different poses and contexts.',
-      tags: ['AI Avatar', 'Flux'],
-      size: 'col-span-12 lg:col-span-4',
-      instagramUrl: 'itsmishtyy'
-    },
-    {
-      number: '03',
       title: 'Hanuman 3D Pipeline',
       category: 'Film VFX',
       description: 'Created end-to-end image-to-3D pipeline for film VFX teams to build complete scenes from concept art.',
       tags: ['Image-to-3D', 'VFX'],
-      size: 'col-span-12 lg:col-span-4',
+      size: 'col-span-12 lg:col-span-6',
       videoUrl: 'https://www.youtube.com/embed/tnJaI2yKESM',
       youtubeLink: 'https://youtu.be/tnJaI2yKESM?si=bsSzy1m-iPUEA6bi'
     },
     {
-      number: '04',
-      title: 'RunPod Serverless Infrastructure',
-      category: 'Cloud Infra',
-      description: 'Designed serverless GPU infrastructure with optimized cold-start times for cost-effective production deployment.',
-      tags: ['Docker', 'GPU', 'API'],
-      size: 'col-span-12 lg:col-span-8'
+      number: '03',
+      title: 'AI Food Show',
+      category: 'Content Creation',
+      description: 'AI food show created for Hansal Mehta',
+      tags: ['AI Video', 'Content'],
+      size: 'col-span-12 lg:col-span-6',
+      instagramUrl: 'p/DWQc2ZZquZQ'
     },
     {
-      number: '05',
+      number: '04',
       title: 'Galleri5 AI Studio Backend',
       category: 'Platform Dev',
       description: 'Built backend infrastructure for AI generation platform serving thousands of users. REST APIs, async queues, and RunPod orchestration.',
       tags: ['FastAPI', 'RunPod', 'Redis'],
+      size: 'col-span-12 lg:col-span-6',
+      projectLink: 'https://aistudio.galleri5.com'
+    },
+    {
+      number: '05',
+      title: 'RunPod Serverless Infrastructure',
+      category: 'Cloud Infra',
+      description: 'Designed serverless GPU infrastructure with optimized cold-start times for cost-effective production deployment.',
+      tags: ['Docker', 'GPU', 'API'],
       size: 'col-span-12 lg:col-span-6'
     },
     {
       number: '06',
+      title: 'Rhea Chakraborty AI Avatar',
+      category: 'Celebrity Tech',
+      description: 'Built celebrity AI avatar with consistent character generation across different poses and contexts.',
+      tags: ['AI Avatar', 'Flux'],
+      size: 'col-span-12 lg:col-span-6',
+      instagramUrl: 'itsmishtyy'
+    },
+    {
+      number: '07',
       title: 'Production ComfyUI Workflows',
       category: 'AI Engineering',
       description: 'Developed modular ComfyUI workflows for face swap, virtual try-on, inpainting, and style transfer used in production.',
@@ -340,34 +311,34 @@ const Projects = () => {
       size: 'col-span-12 lg:col-span-6'
     },
     {
-      number: '07',
+      number: '08',
       title: 'Video LoRA Training',
       category: 'Video AI',
       description: 'Trained character-consistent LoRAs on LTX and Wan video models for custom character generation and style transfers.',
       tags: ['LoRA', 'LTX', 'Wan'],
-      size: 'col-span-12 lg:col-span-4'
+      size: 'col-span-12 lg:col-span-6'
     },
     {
-      number: '08',
+      number: '09',
       title: 'Fashion Brand Fine-tuning',
       category: 'E-commerce',
       description: 'Fine-tuned Flux models with Ostris ai-toolkit and LoRA for fashion brands to generate product catalog images.',
       tags: ['Flux', 'Qwen', 'sdxl', 'E-commerce'],
-      size: 'col-span-12 lg:col-span-8'
+      size: 'col-span-12 lg:col-span-6'
     }
   ];
 
   return (
-    <section id="work" className="py-32 relative">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div ref={ref} className={`mb-16 reveal ${isVisible ? 'active' : ''}`}>
+    <section id="work" className="py-16 sm:py-24 lg:py-32 relative">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
+        <div ref={ref} className={`mb-12 sm:mb-16 reveal ${isVisible ? 'active' : ''}`}>
           <span className="text-sm font-medium text-gray-500 uppercase tracking-widest mb-4 block">Portfolio</span>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold">
             Recent projects
           </h2>
         </div>
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6">
           {projects.map((project, index) => (
             <ProjectCard key={index} {...project} delay={index * 100} />
           ))}
