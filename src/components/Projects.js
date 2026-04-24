@@ -5,7 +5,6 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [tiltStyle, setTiltStyle] = useState({});
   const [isHovered, setIsHovered] = useState(false);
-  const [isInViewportCenter, setIsInViewportCenter] = useState(false);
   const ref = useRef(null);
   const videoRef = useRef(null);
   const iframeRef = useRef(null);
@@ -15,9 +14,6 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          setIsInViewportCenter(true);
-        } else {
-          setIsInViewportCenter(false);
         }
       },
       {
