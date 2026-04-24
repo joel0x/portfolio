@@ -89,7 +89,7 @@ const WhatIDo = () => {
           <ServiceCard
             icon='<svg class="w-8 h-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>'
             title="AI Infrastructure"
-            description="Serverless GPU endpoints on RunPod. Docker containers, REST APIs, and async queues."
+            description="Serverless GPU endpoints on RunPod. Docker containers, REST APIs, and azure kubernetes services."
             number="01"
             delay={0}
           />
