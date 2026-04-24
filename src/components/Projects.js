@@ -124,25 +124,18 @@ const ProjectCard = ({ number, title, category, description, tags, size, delay, 
         ...tiltStyle
       }}
     >
-      {/* Video Section - Visible at top, loads when in view */}
+      {/* Video Section - Loads immediately for instant playback */}
       {videoUrl && (
         <div className="w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
-          {isInViewportCenter ? (
-            <iframe
-              ref={videoRef}
-              src={`${videoUrl}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=${videoUrl.split('/').pop().split('?')[0]}&playsinline=1&enablejsapi=1`}
-              className="w-full h-full border-0"
-              allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={title}
-            />
-          ) : (
-            <div className="w-full h-full bg-gray-900 flex items-center justify-center">
-              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-              </svg>
-            </div>
-          )}
+          <iframe
+            ref={videoRef}
+            src={`${videoUrl}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=${videoUrl.split('/').pop().split('?')[0]}&playsinline=1&enablejsapi=1`}
+            className="w-full h-full border-0"
+            allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={title}
+            loading="eager"
+          />
         </div>
       )}
 
