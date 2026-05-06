@@ -38,16 +38,10 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={() => scrollTo('home')}
-            className="flex items-center gap-2.5 group"
+            className="group"
             aria-label="Joel Machado"
-          >
-            <span className="w-7 h-7 grid place-items-center text-copper-500 text-lg transition-transform duration-700 ease-editorial group-hover:rotate-180">
-              ✦
-            </span>
-            <span className="font-serif text-[17px] font-medium tracking-[-0.01em] text-ink">
-              JM
-            </span>
-          </button>
+          />
+
 
           <div className="hidden md:flex items-center gap-9 text-sm">
             {['work', 'contact'].map((id) => {
