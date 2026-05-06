@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="bg-[#0a0a0a] text-white min-h-screen">
+    <div className="bg-bg text-ink min-h-screen">
       <ScrollProgress />
       <Navbar />
       <Hero />

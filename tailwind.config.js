@@ -7,73 +7,51 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        serif: ['Fraunces', 'Times New Roman', 'serif'],
+        display: ['Fraunces', 'Times New Roman', 'serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
-        primary: {
-          50: '#f5f7ff',
-          100: '#ebf0fe',
-          200: '#d6e1fd',
-          300: '#b8c9fc',
-          400: '#97abf9',
-          500: '#667eea',
-          600: '#5568d3',
-          700: '#4553b8',
-          800: '#38429e',
-          900: '#2d3485',
+        paper: {
+          50:  '#faf9f6',
+          100: '#f1efe9',
+          200: '#e3dfd4',
+          300: '#c9c3b3',
+          400: '#9c968a',
+          500: '#6b675f',
+          600: '#4a4842',
+          700: '#2e2d2a',
+          800: '#1a1917',
+          900: '#0e0d0c',
         },
-        purple: {
-          500: '#764ba2',
-          600: '#643e8a',
-          700: '#533273',
+        copper: {
+          300: '#e6b388',
+          400: '#d49460',
+          500: '#b87333',
         },
-        dark: {
-          900: '#0a0a0a',
-        }
+        ink: '#0e0d0c',
+        bg:  '#faf9f6',
+      },
+      maxWidth: {
+        page: '1240px',
+      },
+      transitionTimingFunction: {
+        editorial: 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out forwards',
-        'slide-up': 'slideUp 1s ease-out forwards',
-        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'scroll-down': 'scrollDown 2s ease-in-out infinite',
-        'marquee': 'marquee 5s linear infinite',
+        'pulse-copper': 'pulseCopper 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite',
+        'marquee': 'marquee 50s linear infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(40px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideInRight: {
-          '0%': { opacity: '0', transform: 'translateX(40px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 20px rgba(102, 126, 234, 0.3)' },
-          '100%': { boxShadow: '0 0 40px rgba(102, 126, 234, 0.6)' },
-        },
-        scrollDown: {
-          '0%': { transform: 'translateY(0)', opacity: '1' },
-          '100%': { transform: 'translateY(16px)', opacity: '0' },
+        pulseCopper: {
+          '0%, 100%': { boxShadow: '0 0 0 4px rgba(184, 115, 51, 0.15)' },
+          '50%':      { boxShadow: '0 0 0 8px rgba(184, 115, 51, 0.05)' },
         },
         marquee: {
-          '0%': { transform: 'translateX(0)' },
+          '0%':   { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
-        }
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        },
       },
     },
   },

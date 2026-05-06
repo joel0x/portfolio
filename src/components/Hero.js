@@ -1,87 +1,121 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useReveal from '../hooks/useReveal';
 
 const Hero = () => {
-  const [scrollY, setScrollY] = useState(0);
+  const [statusRef, statusIn] = useReveal();
+  const [nameRef, nameIn] = useReveal();
+  const [sideRef, sideIn] = useReveal();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - 64;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   return (
-    <section id="home" className="relative min-h-[auto] md:min-h-screen flex items-start md:items-center justify-center overflow-hidden pt-24 pb-10 md:py-0">
-      {/* Gradient Mesh Background */}
-      <div className="gradient-mesh" />
-      <div className="grain" />
+    <header
+      id="home"
+      className="relative min-h-screen flex items-center pt-32 pb-16 md:pt-[140px] md:pb-20"
+    >
+      <div className="relative z-10 max-w-page mx-auto px-5 sm:px-8 lg:px-12 w-full">
+        <div className="grid lg:grid-cols-[1.5fr_1fr] gap-12 lg:gap-20 items-end">
+          <div>
+            <div
+              ref={statusRef}
+              className={`reveal ${statusIn ? 'in' : ''} inline-flex items-center gap-2.5 mb-8`}
+            >
+              <span className="w-[7px] h-[7px] rounded-full bg-copper-500 animate-pulse-copper" />
+              <span className="font-mono text-[12px] tracking-wider text-paper-700">
+                Available for Work
+              </span>
+            </div>
 
-      {/* Content */}
-      <div
-        className="relative z-10 max-w-[1400px] mx-auto px-4 lg:px-12 w-full"
-        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-      >
-        <div className="flex flex-col items-center text-center space-y-5 md:space-y-8">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full opacity-0 animate-fade-in">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-xs font-medium text-gray-300 tracking-wide">Available for Work</span>
+            <h1
+              ref={nameRef}
+              className={`reveal stagger-1 ${nameIn ? 'in' : ''} font-serif font-light leading-[0.92] tracking-[-0.04em] text-ink`}
+              style={{
+                fontSize: 'clamp(56px, 11vw, 168px)',
+                fontVariationSettings: '"opsz" 144, "SOFT" 50',
+              }}
+            >
+              Joel
+              <br />
+              Mach
+              <em
+                className="italic font-light text-copper-500 not-italic"
+                style={{
+                  fontStyle: 'italic',
+                  fontVariationSettings: '"opsz" 144, "SOFT" 100',
+                }}
+              >
+                a
+              </em>
+              do
+              <span
+                className="italic text-copper-500"
+                style={{ fontStyle: 'italic' }}
+              >
+                .
+              </span>
+            </h1>
           </div>
 
-          {/* Main Heading with Creative Typography */}
-          <h1 className="font-display font-black leading-[0.9]">
-            <div className="text-5xl md:text-7xl lg:text-8xl text-white opacity-0 animate-slide-up" style={{ fontFamily: "'Geist', sans-serif", fontWeight: 900 }}>
-              Joel Machado
-            </div>
-          </h1>
-
-          {/* Subtitle */}
-          <div className="max-w-3xl mx-auto opacity-0 animate-slide-up stagger-2 space-y-3 md:space-y-4">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gradient-purple">
+          <aside
+            ref={sideRef}
+            className={`reveal stagger-2 ${sideIn ? 'in' : ''} flex flex-col gap-7 lg:pb-6`}
+          >
+            <h2
+              className="font-serif italic font-light text-copper-500"
+              style={{
+                fontSize: 'clamp(20px, 2.4vw, 30px)',
+                fontVariationSettings: '"opsz" 72, "SOFT" 100',
+              }}
+            >
               AI Engineer
             </h2>
-            <p className="text-base md:text-lg text-gray-400 leading-relaxed px-2 md:px-0">
-              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure. overall, i know programming in general and have experince building products for end users.
-            </p>
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 opacity-0 animate-slide-up stagger-3 w-full px-4 sm:w-auto sm:px-0">
-            <button
-              onClick={() => scrollToSection('work')}
-              className="group w-full sm:w-auto px-8 py-3.5 md:px-10 md:py-5 bg-gradient-to-r from-primary-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-primary-500/50 transition-all cursor-hover-target magnetic-btn flex items-center justify-center gap-3 text-sm md:text-base"
+            <p
+              className="font-serif font-light leading-[1.5] tracking-[-0.005em] text-paper-700"
+              style={{
+                fontSize: 'clamp(17px, 1.45vw, 21px)',
+                fontVariationSettings: '"opsz" 24, "SOFT" 60',
+              }}
             >
-              View Projects
-              <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="w-full sm:w-auto px-8 py-3.5 md:px-10 md:py-5 glass text-white font-semibold rounded-full hover:glass-strong transition-all cursor-hover-target magnetic-btn text-sm md:text-base"
-            >
-              Get in Touch
-            </button>
-          </div>
+              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure. overall, i know programming in general and have experience building products for end users.
+            </p>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button
+                onClick={() => scrollTo('work')}
+                className="group inline-flex items-center gap-2.5 text-sm font-medium px-[22px] py-[14px] rounded-full bg-ink text-bg border border-transparent transition-colors duration-300 ease-editorial hover:bg-copper-500"
+              >
+                View Projects
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 ease-editorial group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => scrollTo('contact')}
+                className="inline-flex items-center text-sm font-medium px-[22px] py-[14px] rounded-full bg-transparent text-ink border border-paper-300 transition-colors duration-300 ease-editorial hover:border-ink"
+              >
+                Get in Touch
+              </button>
+            </div>
+          </aside>
         </div>
       </div>
-    </section>
+    </header>
   );
 };
 

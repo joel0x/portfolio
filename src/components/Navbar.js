@@ -1,94 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('home');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      // Detect active section
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
       const sections = ['home', 'work', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
+      const current = sections.find((id) => {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return r.top <= 100 && r.bottom >= 100;
       });
-      if (current) setActiveSection(current);
+      if (current) setActive(current);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - 64;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'bg-dark-900/80 backdrop-blur-xl py-4 shadow-lg shadow-black/20' : 'py-6'
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,border-color] duration-500 ease-editorial border-b bg-bg/70 backdrop-blur-md ${
+        scrolled ? 'py-4 border-paper-200' : 'py-6 border-transparent'
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="max-w-page mx-auto px-5 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <button
-            onClick={() => scrollToSection('home')}
-            className="text-2xl font-bold cursor-hover-target group"
+            onClick={() => scrollTo('home')}
+            className="flex items-center gap-2.5 group"
+            aria-label="Joel Machado"
           >
-            {/* <span className="text-gradient-purple group-hover:opacity-80 transition-opacity">JM</span> */}
+            <span className="w-7 h-7 grid place-items-center text-copper-500 text-lg transition-transform duration-700 ease-editorial group-hover:rotate-180">
+              ✦
+            </span>
+            <span className="font-serif text-[17px] font-medium tracking-[-0.01em] text-ink">
+              JM
+            </span>
           </button>
 
-          {/* Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection('work')}
-              className={`relative text-sm font-medium transition-all duration-300 ${
-                activeSection === 'work'
-                  ? 'text-white scale-105'
-                  : 'text-gray-400 hover:text-white hover:scale-105'
-              }`}
-            >
-              Work
-              {activeSection === 'work' && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full" />
-              )}
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className={`relative text-sm font-medium transition-all duration-300 ${
-                activeSection === 'contact'
-                  ? 'text-white scale-105'
-                  : 'text-gray-400 hover:text-white hover:scale-105'
-              }`}
-            >
-              Contact
-              {activeSection === 'contact' && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full" />
-              )}
-            </button>
+          <div className="hidden md:flex items-center gap-9 text-sm">
+            {['work', 'contact'].map((id) => {
+              const isActive = active === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => scrollTo(id)}
+                  className={`relative capitalize transition-colors duration-200 ease-editorial group ${
+                    isActive ? 'text-ink' : 'text-paper-500 hover:text-ink'
+                  }`}
+                >
+                  {id === 'work' ? 'Work' : 'Contact'}
+                  <span
+                    className={`absolute left-0 -bottom-1 h-px bg-copper-500 transition-[width] duration-300 ease-editorial ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </div>
 
-          {/* CTA */}
           <a
             href="mailto:joelmachado.work@gmail.com"
-            className="hidden md:block px-6 py-3 bg-gradient-to-r from-primary-500 to-purple-500 text-white text-sm font-semibold rounded-full hover:shadow-xl hover:shadow-primary-500/50 hover:scale-105 transition-all duration-300"
+            className="hidden md:inline-block text-[13px] px-4 py-2 border border-ink rounded-full transition-colors duration-300 ease-editorial hover:bg-ink hover:text-bg"
           >
             Let's Talk
           </a>
