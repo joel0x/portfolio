@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    { "source": "/blogs", "destination": "/index.html" },
+    { "source": "/blogs/", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ]
+    }
+  ]
+}

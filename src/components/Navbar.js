@@ -28,6 +28,12 @@ const Navbar = () => {
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
+  const goToBlogs = (e) => {
+    e.preventDefault();
+    window.history.pushState({}, '', '/blogs');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-[padding,border-color] duration-500 ease-editorial border-b bg-bg/70 backdrop-blur-md ${
@@ -63,6 +69,14 @@ const Navbar = () => {
                 </button>
               );
             })}
+            <a
+              href="/blogs"
+              onClick={goToBlogs}
+              className="relative transition-colors duration-200 ease-editorial group text-paper-500 hover:text-ink"
+            >
+              Blog
+              <span className="absolute left-0 -bottom-1 h-px w-0 bg-copper-500 transition-[width] duration-300 ease-editorial group-hover:w-full" />
+            </a>
           </div>
 
           <a
