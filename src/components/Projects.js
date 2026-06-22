@@ -146,13 +146,12 @@ const Projects = () => {
   const projects = [
     {
       number: '01',
-      title: 'Mahabharata — JioHotstar',
-      category: 'OTT Production',
-      description: 'Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.',
-      tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
+      title: 'Galleri5 AI Studio Backend',
+      category: 'Platform Dev',
+      description: 'Built AI agents and overall orchestration for AI video generation. REST APIs, async queues, and AKS scaling.',
+      tags: ['FastAPI', 'AKS', 'Redis'],
       size: 'col-span-12 lg:col-span-6',
-      videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
-      youtubeLink: 'https://youtu.be/ELmlmlvkNF8?si=71_cO7lOvY9_d5Bv',
+      projectLink: 'https://aistudio.galleri5.com',
     },
     {
       number: '02',
@@ -175,12 +174,13 @@ const Projects = () => {
     },
     {
       number: '04',
-      title: 'Galleri5 AI Studio Backend',
-      category: 'Platform Dev',
-      description: 'Built backend infrastructure for AI generation platform serving thousands of users. REST APIs, async queues, and RunPod orchestration.',
-      tags: ['FastAPI', 'RunPod', 'Redis'],
+      title: 'Mahabharata — JioHotstar',
+      category: 'OTT Production',
+      description: 'Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.',
+      tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
       size: 'col-span-12 lg:col-span-6',
-      projectLink: 'https://aistudio.galleri5.com',
+      videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
+      youtubeLink: 'https://youtu.be/ELmlmlvkNF8?si=71_cO7lOvY9_d5Bv',
     },
     {
       number: '05',

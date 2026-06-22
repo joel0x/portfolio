@@ -10,23 +10,37 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Blogs from './components/Blogs';
+import Article from './components/Article';
 
-const isBlogsPath = (pathname) => /^\/blogs\/?$/.test(pathname);
+const routeFor = (pathname) => {
+  if (/^\/blogs\/?$/.test(pathname)) return { name: 'blogs' };
+  const m = pathname.match(/^\/blogs\/([^/]+)\/?$/);
+  if (m) return { name: 'article', slug: decodeURIComponent(m[1]) };
+  return { name: 'home' };
+};
 
 function App() {
-  const [path, setPath] = useState(window.location.pathname);
+  const [route, setRoute] = useState(() => routeFor(window.location.pathname));
 
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname);
+    const onPop = () => setRoute(routeFor(window.location.pathname));
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [path]);
+  }, [route]);
 
-  if (isBlogsPath(path)) {
+  if (route.name === 'article') {
+    return (
+      <div className="bg-bg text-ink min-h-screen">
+        <Article slug={route.slug} />
+      </div>
+    );
+  }
+
+  if (route.name === 'blogs') {
     return (
       <div className="bg-bg text-ink min-h-screen">
         <Blogs />

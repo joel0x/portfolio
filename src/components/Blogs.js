@@ -1,109 +1,23 @@
 import React from 'react';
 import useReveal from '../hooks/useReveal';
+import posts from '../data/posts.json';
 
-const posts = [
-  {
-    title: 'How to create mute animation similar to YouTube using react native?',
-    url: 'https://medium.com/@joelmachado649/how-to-create-mute-animation-similar-to-youtube-using-react-native-24a695dae330',
-    date: 'April 15, 2024',
-    publication: 'Medium',
-    description:
-      'Walkthrough of replicating the YouTube-style mute toggle animation in a React Native app.',
-    tags: ['React Native', 'Animation', 'UI'],
-  },
-  {
-    title:
-      'Host your website in Firebase easily (Explained all different types of errors you may face)',
-    url: 'https://medium.com/@joelmachado649/host-your-website-in-firebase-easily-explained-all-different-types-of-errors-you-may-face-89ef67847eda',
-    date: 'March 16, 2024',
-    publication: 'Medium',
-    description:
-      'A complete Firebase Hosting setup with common error troubleshooting and redirect configuration.',
-    tags: ['Firebase', 'Hosting', 'DevOps'],
-  },
-  {
-    title: 'Only blog you need for learning everything about authentication from scratch',
-    url: 'https://medium.com/@joelmachado649/only-blog-you-need-for-learning-everything-about-authentication-from-scratch-f1b0bb9fd58f',
-    date: 'July 22, 2023',
-    publication: 'Medium',
-    description:
-      'Comprehensive authentication guide spanning basic methods through OAuth implementation.',
-    tags: ['Auth', 'Security', 'OAuth'],
-  },
-  {
-    title: 'Style transfer in Gen AI and what can be done',
-    url: 'https://medium.com/@joelmachado649/style-transfer-in-gen-ai-and-what-can-be-done-fb75b9343f5f',
-    date: '2023',
-    publication: 'Medium',
-    description:
-      'Exploring style transfer techniques in generative AI and their practical applications.',
-    tags: ['Gen AI', 'Style Transfer'],
-  },
-  {
-    title: 'Sentiment Analysis in detail with an example!',
-    url: 'https://medium.com/@joelmachado649/sentiment-analysis-in-detail-with-an-example-d47cdaefa689',
-    date: 'September 2, 2023',
-    publication: 'Medium',
-    description:
-      'A deep dive into sentiment analysis fundamentals with practical Python examples.',
-    tags: ['NLP', 'Python', 'ML'],
-  },
-  {
-    title: 'Events in Solidity: Create Interactive Smart Contracts',
-    url: 'https://medium.com/coinsbench/eventin-solidity-create-interactive-smart-contracts-2e2b133a92c6',
-    date: 'June 9, 2023',
-    publication: 'CoinsBench',
-    description:
-      'How Solidity events power communication between smart contracts and off-chain consumers.',
-    tags: ['Solidity', 'Smart Contracts', 'Web3'],
-  },
-  {
-    title: 'The Game-Changing Fusion of Spatial Analytics with AI!',
-    url: 'https://medium.com/@joelmachado649/the-game-changing-fusion-of-spatial-analytics-with-ai-393954f30dc',
-    date: 'May 2, 2023',
-    publication: 'Medium',
-    description:
-      'How spatial analytics combined with AI is reshaping decision-making across industries.',
-    tags: ['Spatial Analytics', 'AI'],
-  },
-  {
-    title: 'Solidity cryptographic functions',
-    url: 'https://medium.com/coinsbench/soidity-cryptographic-functions-338730519213',
-    date: 'March 31, 2023',
-    publication: 'CoinsBench',
-    description:
-      'A tour of Solidity’s built-in cryptographic primitives and where to use them safely.',
-    tags: ['Solidity', 'Cryptography', 'Security'],
-  },
-  {
-    title: 'Blockchain and counterfeit drugs',
-    url: 'https://medium.com/coinsbench/blockchain-and-counterfeit-drugs-9093f447b295',
-    date: 'March 26, 2023',
-    publication: 'CoinsBench',
-    description:
-      'Using blockchain provenance to fight counterfeit pharmaceuticals across the supply chain.',
-    tags: ['Blockchain', 'Healthcare'],
-  },
-  {
-    title: 'Solidity function to implement a trustless escrow system',
-    url: 'https://medium.com/@joelmachado649/solidity-function-to-implement-a-trustless-escrow-system-where-funds-are-held-in-escrow-until-db187e12f16b',
-    date: 'March 26, 2023',
-    publication: 'Medium',
-    description:
-      'Implementing a trustless escrow in Solidity where funds release only when conditions are met.',
-    tags: ['Solidity', 'Escrow', 'Web3'],
-  },
-];
+const navigate = (e, href) => {
+  e.preventDefault();
+  if (window.location.pathname === href) return;
+  window.history.pushState({}, '', href);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+};
 
 const BlogCard = ({ post, index }) => {
   const [ref, shown] = useReveal(0.15);
+  const href = `/blogs/${post.slug}`;
 
   return (
     <a
       ref={ref}
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={href}
+      onClick={(e) => navigate(e, href)}
       className={`reveal ${shown ? 'in' : ''} group block bg-paper-50 border border-paper-200 rounded-sm p-6 sm:p-8 lg:p-10 transition-[transform,border-color] duration-500 ease-editorial hover:-translate-y-1 hover:border-paper-400`}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
@@ -123,16 +37,19 @@ const BlogCard = ({ post, index }) => {
           fontVariationSettings: '"opsz" 72',
         }}
       >
-        {post.title}
+        {post.title.replace(/\.$/, '')}
       </h3>
 
-      <p className="text-[15px] leading-[1.6] text-paper-500 mb-5 sm:mb-6">
-        {post.description}
-      </p>
+      {post.excerpt && (
+        <p className="text-[15px] leading-[1.6] text-paper-500 mb-5 sm:mb-6 line-clamp-3">
+          {post.excerpt}
+          {post.excerpt.length >= 220 ? '…' : ''}
+        </p>
+      )}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
+          {post.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
               className="font-mono text-[11px] tracking-wider px-3 py-1.5 border border-paper-300 rounded-full text-paper-700 bg-bg"
@@ -142,7 +59,7 @@ const BlogCard = ({ post, index }) => {
           ))}
         </div>
         <span className="font-mono text-[11px] tracking-wider uppercase text-copper-500 group-hover:text-copper-400 transition-colors duration-200 ease-editorial">
-          Read ↗
+          Read →
         </span>
       </div>
     </a>
@@ -152,12 +69,6 @@ const BlogCard = ({ post, index }) => {
 const Blogs = () => {
   const [headRef, headIn] = useReveal();
 
-  const goHome = (e) => {
-    e.preventDefault();
-    window.history.pushState({}, '', '/');
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
   return (
     <main className="min-h-screen bg-bg text-ink">
       <nav className="fixed top-0 left-0 right-0 z-50 py-6 border-b border-transparent bg-bg/70 backdrop-blur-md">
@@ -165,7 +76,7 @@ const Blogs = () => {
           <div className="flex items-center justify-between">
             <a
               href="/"
-              onClick={goHome}
+              onClick={(e) => navigate(e, '/')}
               className="font-mono text-[12px] tracking-[0.2em] uppercase text-paper-500 hover:text-ink transition-colors duration-200 ease-editorial"
             >
               ← Joel Machado
@@ -204,16 +115,7 @@ const Blogs = () => {
               }}
             >
               Notes from across the stack — generative AI, Web3, mobile, and the
-              infrastructure that holds it all together. Originally published on{' '}
-              <a
-                href="https://medium.com/@joelmachado649"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-copper-500 hover:text-copper-400 underline"
-              >
-                Medium
-              </a>
-              .
+              infrastructure that holds it all together.
             </p>
           </div>
         </div>
@@ -223,7 +125,7 @@ const Blogs = () => {
         <div className="max-w-page mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {posts.map((post, i) => (
-              <BlogCard key={post.url} post={post} index={i} />
+              <BlogCard key={post.slug} post={post} index={i} />
             ))}
           </div>
         </div>
@@ -240,7 +142,7 @@ const Blogs = () => {
             </div>
             <a
               href="/"
-              onClick={goHome}
+              onClick={(e) => navigate(e, '/')}
               className="group relative font-mono text-[11px] tracking-[0.18em] uppercase text-paper-400 hover:text-copper-400 transition-colors duration-200 ease-editorial"
             >
               Back to Portfolio →
