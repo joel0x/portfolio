@@ -76,7 +76,7 @@ const WhatIDo = () => {
                   style={{
                     fontSize: 'clamp(26px, 3.4vw, 48px)',
                     fontVariationSettings: '"opsz" 96, "SOFT" 50',
-                    fontWeight: 300,
+                    fontWeight: 600,
                   }}
                 >
                   {s.title}
