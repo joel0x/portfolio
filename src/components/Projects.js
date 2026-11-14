@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import useReveal from '../hooks/useReveal';
 
 const youtubeId = (url) => {
@@ -18,23 +18,22 @@ const ProjectCard = ({
   youtubeLink,
   instagramUrl,
   projectLink,
+  points,
+  videoFile,
+  videoPoster,
 }) => {
   const [ref, shown] = useReveal(0.2);
   const id = youtubeId(videoUrl);
-
-  useEffect(() => {
-    if (!instagramUrl) return;
-    const exists = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
-    if (!exists) {
-      const s = document.createElement('script');
-      s.src = 'https://www.instagram.com/embed.js';
-      s.async = true;
-      s.onload = () => window.instgrm && window.instgrm.Embeds.process();
-      document.body.appendChild(s);
-    } else if (window.instgrm) {
-      window.instgrm.Embeds.process();
+  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(true);
+  const toggleMute = () => {
+    const next = !muted;
+    setMuted(next);
+    if (videoRef.current) {
+      videoRef.current.muted = next;
+      if (!next) videoRef.current.play().catch(() => {});
     }
-  }, [instagramUrl]);
+  };
 
   return (
     <div
@@ -64,7 +63,49 @@ const ProjectCard = ({
         </div>
       )}
 
-      {instagramUrl && (
+      {videoFile && (
+        <div className="group/vid relative w-full aspect-video bg-paper-900 overflow-hidden">
+          <video
+            ref={videoRef}
+            src={videoFile}
+            poster={videoPoster}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted={muted}
+            loop
+            playsInline
+            preload="metadata"
+          />
+          <a
+            href={`https://www.instagram.com/${instagramUrl}/`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Watch ${title} on Instagram`}
+            className="absolute inset-0 flex items-center justify-center bg-ink/0 transition-colors duration-300 ease-editorial group-hover/vid:bg-ink/50"
+          >
+            <span className="inline-flex items-center gap-2 text-sm font-medium px-5 py-3 rounded-full bg-bg text-ink opacity-0 translate-y-2 transition-all duration-300 ease-editorial group-hover/vid:opacity-100 group-hover/vid:translate-y-0">
+              Watch on Instagram ↗
+            </span>
+            <span className="absolute bottom-3 right-3 font-mono text-[11px] tracking-wider uppercase text-paper-50 bg-paper-900/70 px-2.5 py-1 rounded-full backdrop-blur-sm transition-opacity duration-300 group-hover/vid:opacity-0">
+              Instagram ↗
+            </span>
+          </a>
+          <button
+            type="button"
+            onClick={toggleMute}
+            aria-label={muted ? 'Unmute video' : 'Mute video'}
+            className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-2 font-mono text-[11px] tracking-wider uppercase text-paper-50 bg-paper-900/70 hover:bg-copper-500 pl-2 pr-3 py-1.5 rounded-full transition-colors duration-200 ease-editorial backdrop-blur-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden>
+              <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" />
+              {muted ? <path d="M16 9.5l5 5M21 9.5l-5 5" /> : <path d="M15.5 9a4.5 4.5 0 010 6M18 6.5a8 8 0 010 11" />}
+            </svg>
+            {muted ? 'Unmute' : 'Mute'}
+          </button>
+        </div>
+      )}
+
+      {instagramUrl && !videoFile && (
         <a
           href={`https://www.instagram.com/${instagramUrl}`}
           target="_blank"
@@ -121,9 +162,40 @@ const ProjectCard = ({
           </a>
         )}
 
-        <p className="text-[15px] leading-[1.6] text-paper-500 mb-4 sm:mb-6">
-          {description}
-        </p>
+        {description && (
+          <p className="text-[15px] leading-[1.6] text-paper-500 mb-4 sm:mb-6">
+            {description}
+          </p>
+        )}
+
+        {points && (
+          <ul className="mb-5 sm:mb-6 border-t border-paper-200">
+            {points.map((pt) => (
+              <li
+                key={pt.name}
+                className="flex gap-3 py-3 border-b border-paper-200 text-[15px] leading-[1.5]"
+              >
+                <span className="mt-[9px] w-1.5 h-1.5 shrink-0 rounded-full bg-copper-500" />
+                <span className="text-paper-500">
+                  {pt.link ? (
+                    <a
+                      href={pt.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-ink underline decoration-copper-500 underline-offset-4 hover:text-copper-500"
+                    >
+                      {pt.name}
+                    </a>
+                  ) : (
+                    <span className="font-medium text-ink">{pt.name}</span>
+                  )}
+                  {' — '}
+                  {pt.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
@@ -155,13 +227,16 @@ const Projects = () => {
     },
     {
       number: '02',
-      title: 'Mahabharata — JioHotstar',
-      category: 'OTT Production',
-      description: 'Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.',
-      tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
+      title: 'Applied AI Applications',
+      category: 'Product Dev',
+      points: [
+        { name: 'Vhagar', text: 'fitness app for iOS and Android with an AI coach', link: 'https://apps.apple.com/app/vhagar/id6817309556' },
+        { name: 'Haven', text: 'home decor app that plans rooms from photos of what you own' },
+        { name: 'Zoodlekid', text: 'kids web app with AI-generated activity illustrations' },
+        { name: 'CreatorIndex', text: 'search Indian creators by real performance', link: 'https://creatorindex.in' },
+      ],
+      tags: ['Flutter', 'Web', 'FastAPI', 'Firebase'],
       size: 'col-span-12 lg:col-span-6',
-      videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
-      youtubeLink: 'https://youtu.be/ELmlmlvkNF8?si=71_cO7lOvY9_d5Bv',
     },
     {
       number: '03',
@@ -171,9 +246,21 @@ const Projects = () => {
       tags: ['AI Video', 'Content'],
       size: 'col-span-12 lg:col-span-6',
       instagramUrl: 'p/DWQc2ZZquZQ',
+      videoFile: 'https://pub-7df44b1f82fa43c284d2e43850f07ac0.r2.dev/ai-food-show.mp4',
+      videoPoster: 'https://pub-7df44b1f82fa43c284d2e43850f07ac0.r2.dev/ai-food-show.jpg',
     },
     {
       number: '04',
+      title: 'Mahabharata — JioHotstar',
+      category: 'OTT Production',
+      description: 'Led AI pipeline architecture for mahabharat series. Built bulk generation systems and LipSync automation.',
+      tags: ['LipSync', 'Bulk Gen', 'ComfyUI'],
+      size: 'col-span-12 lg:col-span-6',
+      videoUrl: 'https://www.youtube.com/embed/ELmlmlvkNF8',
+      youtubeLink: 'https://youtu.be/ELmlmlvkNF8?si=71_cO7lOvY9_d5Bv',
+    },
+    {
+      number: '05',
       title: 'Hanuman 3D Pipeline',
       category: 'Film VFX',
       description: 'Created end-to-end image-to-3D pipeline for film VFX teams to build complete scenes from concept art.',
@@ -183,7 +270,7 @@ const Projects = () => {
       youtubeLink: 'https://youtu.be/tnJaI2yKESM?si=bsSzy1m-iPUEA6bi',
     },
     {
-      number: '05',
+      number: '06',
       title: 'RunPod Serverless Infrastructure',
       category: 'Cloud Infra',
       description: 'Designed serverless GPU infrastructure with optimized cold-start times for cost-effective production deployment.',
@@ -191,7 +278,7 @@ const Projects = () => {
       size: 'col-span-12 lg:col-span-6',
     },
     {
-      number: '06',
+      number: '07',
       title: 'Rhea Chakraborty AI Avatar',
       category: 'Celebrity Tech',
       description: 'Built celebrity AI avatar with consistent character generation across different poses and contexts.',
@@ -200,7 +287,7 @@ const Projects = () => {
       instagramUrl: 'itsmishtyy',
     },
     {
-      number: '07',
+      number: '08',
       title: 'Production ComfyUI Workflows',
       category: 'AI Engineering',
       description: 'Developed modular ComfyUI workflows for face swap, virtual try-on, inpainting, and style transfer used in production.',
@@ -208,7 +295,7 @@ const Projects = () => {
       size: 'col-span-12 lg:col-span-6',
     },
     {
-      number: '08',
+      number: '09',
       title: 'Video LoRA Training',
       category: 'Video AI',
       description: 'Trained character-consistent LoRAs on LTX and Wan video models for custom character generation and style transfers.',
@@ -216,7 +303,7 @@ const Projects = () => {
       size: 'col-span-12 lg:col-span-6',
     },
     {
-      number: '09',
+      number: '10',
       title: 'Fashion Brand Fine-tuning',
       category: 'E-commerce',
       description: 'Fine-tuned Flux models with Ostris ai-toolkit and LoRA for fashion brands to generate product catalog images.',

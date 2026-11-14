@@ -58,7 +58,7 @@ const Metrics = () => (
         <MetricCard number="8+" label="Production Projects" delay={0} />
         <MetricCard number="50+" label="ComfyUI Workflows" delay={100} />
         <MetricCard number="3+" label="OTT Productions" delay={200} />
-        <MetricCard number="100+" label="Shots Per Run" delay={300} />
+        <MetricCard number="10+" label="Mobile &amp; Web Apps" delay={300} />
       </div>
     </div>
   </section>

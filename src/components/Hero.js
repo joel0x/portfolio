@@ -82,7 +82,7 @@ const Hero = () => {
                 fontVariationSettings: '"opsz" 24, "SOFT" 60',
               }}
             >
-              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure. overall, i know programming in general and have experience building products for end users.
+              I build AI systems for film production, fashion e-commerce, and streaming platforms from custom diffusion models to serverless GPU infrastructure. overall, i know programming and have experience building products for end users.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
